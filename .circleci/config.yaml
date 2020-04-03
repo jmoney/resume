@@ -1,0 +1,40 @@
+version: 2
+
+jobs:
+    build:
+        docker:
+            - image: circleci/node:10.19.0
+        working_directory: ~/jmoney8080.github.com
+        steps:
+            - checkout
+            - run: 
+                name: Download dependencies
+                command: make JonathanMonette_resume.pdf
+  publish-github-release:
+    docker:
+      - image: circleci/golang:1.8
+    steps:
+      - attach_workspace:
+          at: ./
+      - run:
+          name: "Publish Release on GitHub"
+          command: |
+            go get github.com/tcnksm/ghr
+            VERSION=$(git describe --abbrev=0)
+            ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${VERSION} ./JonathanMonette_resume.pdf
+workflows:
+    version: 2
+    commit-workflow:
+        jobs:
+            - build:
+                filters:
+                    branches:
+                        only: master
+            - publish-github-release:
+                requires:
+                    - build
+                filters:
+                    branches:
+                        ignore: /.*/
+                    tags:
+                        only: /^\d+\.\d+\.\d+$/
