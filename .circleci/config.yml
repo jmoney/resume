@@ -3,13 +3,13 @@ version: 2
 jobs:
     build:
         docker:
-            - image: circleci/node:10.19.0
+            - image: circleci/golang:1.8
         working_directory: ~/jmoney8080.github.com
         steps:
             - checkout
             - run:
                 name: Install luatex
-                command: sudo apt-get install -y luatex
+                command: sudo apt-get install -y texlive-luatex
             - run:
                 name: Download dependencies
                 command: make JonathanMonette_resume.pdf
