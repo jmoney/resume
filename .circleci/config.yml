@@ -9,7 +9,7 @@ jobs:
             - checkout
             - run:
                 name: Install luatex
-                command: apt-get install -y luatex
+                command: sudo apt-get install -y luatex
             - run:
                 name: Download dependencies
                 command: make JonathanMonette_resume.pdf
