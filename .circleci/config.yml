@@ -8,6 +8,9 @@ jobs:
         steps:
             - checkout
             - run:
+                name: Update debian
+                command: sudo apt-get update -y
+            - run:
                 name: Install luatex
                 command: sudo apt-get install -y texlive-luatex
             - run:
