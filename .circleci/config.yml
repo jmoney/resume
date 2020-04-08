@@ -15,7 +15,7 @@ jobs:
                 command: sudo apt-get install -y texlive-luatex
             - run:
                 name: debug stuff
-                command: ls -la
+                command: ls -laR /usr/local/
             - run:
                 name: Make Resume
                 command: make JonathanMonette_resume.pdf
