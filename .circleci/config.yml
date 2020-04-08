@@ -4,7 +4,7 @@ jobs:
     build:
         docker:
             - image: circleci/golang:1.8
-        working_directory: ~/jmoney8080.github.com
+        working_directory: ~/resume
         steps:
             - checkout
             - run:
@@ -14,7 +14,7 @@ jobs:
                 name: Install luatex
                 command: sudo apt-get install -y texlive-luatex
             - run:
-                name: Download dependencies
+                name: Make Resume
                 command: make JonathanMonette_resume.pdf
     publish-github-release:
         docker:
