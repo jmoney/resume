@@ -14,6 +14,9 @@ jobs:
                 name: Install luatex
                 command: sudo apt-get install -y texlive-luatex
             - run:
+                name: debug stuff
+                command: ls -la
+            - run:
                 name: Make Resume
                 command: make JonathanMonette_resume.pdf
     publish-github-release:
