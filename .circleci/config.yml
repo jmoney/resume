@@ -1,58 +1,21 @@
 version: 2
-
 jobs:
-    build:
-        environment:
-          IMAGE_NAME: jmoney8080/resume
-        docker:
-          - image: circleci/buildpack-deps:stretch
-        steps:
-          - checkout
-          - setup_remote_docker
-          - run:
-              name: Build Docker image
-              command: docker build -t $IMAGE_NAME:latest .
     make_resume:
         docker:
-            - image: jmoney8080/resume:latest
+          - image: jmoney8080/latex-resume-builder:0.0.3
         working_directory: ~/resume
         steps:
             - checkout
             - run:
                 name: Make Resume
                 command: make JonathanMonette_resume.pdf
-    publish-github-release:
-        docker:
-            - image: circleci/golang:1.8
-        steps:
-            - attach_workspace:
-                at: ./
-            - run:
-                name: "Publish Release on GitHub"
-                command: |
-                    go get github.com/tcnksm/ghr
-                    VERSION=$(git describe --abbrev=0)
-                    ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${VERSION} ./JonathanMonette_resume.pdf
 workflows:
     version: 2
     commit-workflow:
         jobs:
-            - build:
-                filters:
-                    branches:
-                        only: master
             - make_resume:
                 requires:
                     - build
                 filters:
                     branches:
                         only: master
-            - publish-github-release:
-                requires:
-                    - build
-                    - make_resume
-                filters:
-                    branches:
-                        ignore: /.*/
-                    tags:
-                        only: /^\d+\.\d+\.\d+$/
