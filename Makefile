@@ -9,4 +9,4 @@ resume.pdf: resume.tex awesome-cv.cls
 	lualatex resume.tex
 
 JonathanMonette_resume.pdf: resume.pdf
-	@mv resume.pdf JonathanMonette_resume.pdf
+	@mv -v resume.pdf JonathanMonette_resume.pdf
