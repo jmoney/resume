@@ -1,4 +1,4 @@
-VERSION=$(git describe --abbrev=0)
+VERSION= $(shell git describe --abbrev=0)
 
 .PHONY: all view
 
@@ -14,5 +14,4 @@ JonathanMonette_resume.pdf: resume.pdf
 	@mv -v resume.pdf JonathanMonette_resume.pdf
 
 release: JonathanMonette_resume.pdf
-
 	ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete $(VERSION) ./JonathanMonette_resume.pdf
