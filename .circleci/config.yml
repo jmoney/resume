@@ -2,13 +2,22 @@ version: 2
 jobs:
     make_resume:
         docker:
-          - image: jmoney8080/latex-resume-builder:0.0.3
+          - image: jmoney8080/latex-resume-builder:0.0.4
         working_directory: ~/resume
         steps:
             - checkout
             - run:
                 name: Make Resume
                 command: make JonathanMonette_resume.pdf
+    release_resume:
+        docker:
+          - image: jmoney8080/latex-resume-builder:0.0.4
+        working_directory: ~/resume
+        steps:
+            - checkout
+            - run:
+                name: Release Resume
+                command: make release
 workflows:
     version: 2
     commit-workflow:
@@ -17,3 +26,11 @@ workflows:
                 filters:
                     branches:
                         only: master
+            - release_resume:
+                requires:
+                    - make_resume
+                filters:
+                    branches:
+                        ignore: /.*/
+                    tags:
+                        only: /^\d+\.\d+\.\d+$/
