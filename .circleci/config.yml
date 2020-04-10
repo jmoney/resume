@@ -16,7 +16,7 @@ jobs:
         steps:
             - checkout
             - run:
-                name: Release Resume
+                name: Make Release
                 command: make release
 workflows:
     version: 2
