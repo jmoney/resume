@@ -42,6 +42,8 @@ workflows:
                     branches:
                         only: master
             - make_resume:
+                requires:
+                    - build
                 filters:
                     branches:
                         only: master
