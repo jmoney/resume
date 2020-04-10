@@ -2,7 +2,7 @@ version: 2
 jobs:
     make_resume:
         docker:
-          - image: jmoney8080/latex-resume-builder:0.0.4
+          - image: jmoney8080/latex-resume-builder:0.0.5
         working_directory: ~/resume
         steps:
             - checkout
@@ -11,7 +11,7 @@ jobs:
                 command: make JonathanMonette_resume.pdf
     release_resume:
         docker:
-          - image: jmoney8080/latex-resume-builder:0.0.4
+          - image: jmoney8080/latex-resume-builder:0.0.5
         working_directory: ~/resume
         steps:
             - checkout
