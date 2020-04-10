@@ -2,20 +2,22 @@ version: 2
 
 jobs:
     build:
+        environment:
+          IMAGE_NAME: jmoney8080/resume
         docker:
-            - image: circleci/golang:1.8
+          - image: circleci/buildpack-deps:stretch
+        steps:
+          - checkout
+          - setup_remote_docker
+          - run:
+              name: Build Docker image
+              command: docker build -t $IMAGE_NAME:latest
+    make_resume:
+        docker:
+            - image: jmoney8080/resume:latest
         working_directory: ~/resume
         steps:
             - checkout
-            - run:
-                name: Update debian
-                command: sudo apt-get update -y
-            - run:
-                name: Install luatex
-                command: sudo apt-get install -y texlive-luatex
-            - run:
-                name: debug stuff
-                command: ls -la /usr/bin
             - run:
                 name: Make Resume
                 command: make JonathanMonette_resume.pdf
@@ -39,9 +41,14 @@ workflows:
                 filters:
                     branches:
                         only: master
+            - make_resume:
+                filters:
+                    branches:
+                        only: master
             - publish-github-release:
                 requires:
                     - build
+                    - make_resume
                 filters:
                     branches:
                         ignore: /.*/
