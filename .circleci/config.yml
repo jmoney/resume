@@ -14,8 +14,6 @@ workflows:
     commit-workflow:
         jobs:
             - make_resume:
-                requires:
-                    - build
                 filters:
                     branches:
                         only: master
