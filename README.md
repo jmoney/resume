@@ -1,5 +1,5 @@
 [![made-with-latex](https://img.shields.io/badge/Made%20with-LaTeX-1f425f.svg)](https://www.latex-project.org/)
-[![CircleCI](https://circleci.com/gh/circleci/circleci-docs.svg?style=shield)](https://circleci.com/gh/circleci/circleci-docs)
+[![CircleCI](https://img.shields.io/circleci/build/github/jmoney8080/resume)](https://circleci.com/gh/circleci/circleci-docs)
 ![release](https://img.shields.io/github/v/release/jmoney8080/resume)
 
 
